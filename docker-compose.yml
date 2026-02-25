@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  poupa-compra-scraping:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: poupa-compra-scraping-java
+    ports:
+      - "8181:8181"
+    environment:
+      - JAVA_OPTS=-XX:+UseZGC -XX:+ZGenerational -Xms256m -Xmx512m --enable-preview
+      - SCRAPING_BROWSER_POOL_SIZE=3
+      - SCRAPING_BROWSER_HEADLESS=true
+      - SCRAPING_CACHE_TTL_HOURS=24
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8181/hello"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - scraping-network
+
+networks:
+  scraping-network:
+    driver: bridge

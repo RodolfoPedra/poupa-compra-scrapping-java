@@ -1,0 +1,46 @@
+server:
+  port: 8181
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 10
+
+spring:
+  application:
+    name: poupa-compra-scraping
+  threads:
+    virtual:
+      enabled: true
+  
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=24h
+
+scraping:
+  browser:
+    pool-size: 3
+    headless: true
+    timeout-ms: 25000
+    page-load-timeout-ms: 30000
+  
+  cache:
+    ttl-hours: 24
+    max-size: 1000
+
+# Actuator para monitoramento
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,caches
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    br.com.poupacompra: DEBUG
+    com.microsoft.playwright: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
