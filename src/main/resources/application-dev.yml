@@ -3,7 +3,7 @@ spring:
     openfeign:
       client:
         config:
-          feignName:
+          poupa-compra-api:
             url: ${api.poupacompra.url}
             connectTimeout: 5000
             readTimeout: 5000

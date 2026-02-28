@@ -11,15 +11,6 @@ spring:
   threads:
     virtual:
       enabled: true
-  cloud:
-    openfeign:
-      client:
-        config:
-          feignName:
-            url: http://remote-service.com
-            connectTimeout: 5000
-            readTimeout: 5000
-            loggerLevel: full
   
   cache:
     type: caffeine
