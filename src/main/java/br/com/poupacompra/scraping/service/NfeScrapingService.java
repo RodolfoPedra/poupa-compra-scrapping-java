@@ -19,6 +19,7 @@ import com.microsoft.playwright.TimeoutError;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import com.microsoft.playwright.options.WaitUntilState;
 
+import br.com.poupacompra.scraping.client.PoupaCompraApiClient;
 import br.com.poupacompra.scraping.config.CacheConfig;
 import br.com.poupacompra.scraping.config.ScrapingProperties;
 import br.com.poupacompra.scraping.dto.DadosNotaResponseDTO;
@@ -37,10 +38,12 @@ public class NfeScrapingService {
     
     private final BrowserPoolService browserPoolService;
     private final ScrapingProperties properties;
+    private final PoupaCompraApiClient poupaCompraApiClient;
     
-    public NfeScrapingService(BrowserPoolService browserPoolService, ScrapingProperties properties) {
+    public NfeScrapingService(BrowserPoolService browserPoolService, ScrapingProperties properties, PoupaCompraApiClient poupaCompraApiClient) {
         this.browserPoolService = browserPoolService;
         this.properties = properties;
+        this.poupaCompraApiClient = poupaCompraApiClient;
     }
     
     /**
@@ -64,6 +67,8 @@ public class NfeScrapingService {
             
             long elapsed = System.currentTimeMillis() - startTime;
             log.info("✓ Scraping completo em {}ms", elapsed);
+            
+            enviarParaApi(result);
             
             return result;
             
@@ -191,7 +196,7 @@ public class NfeScrapingService {
         EstabelecimentoDTO estabelecimento = EstabelecimentoDTO.builder()
             .nomeEstabelecimento((String) dadosPrincipais.get("nomeEstab"))
             .cpfCnpj(cpfCnpj)
-            .endereco((String) dadosPrincipais.get("endereco"))
+            .endereco(clearAddress((String) dadosPrincipais.get("endereco")))
             .build();
         
         List<Map<String, String>> produtosData = (List<Map<String, String>>) page.evaluate("""
@@ -247,6 +252,25 @@ public class NfeScrapingService {
             .itensNota(itensNota)
             .nota(nota)
             .build();
+    }
+    
+    private void enviarParaApi(DadosNotaResponseDTO dadosNota) {
+        try {
+            log.info("Enviando dados da nota para a API Poupa Compra");
+            poupaCompraApiClient.salvarNota(dadosNota);
+            log.info("Dados da nota enviados com sucesso para a API");
+        } catch (Exception e) {
+            log.error("Erro ao enviar dados para a API Poupa Compra: {}", e.getMessage(), e);
+        }
+    }
+
+    public static String clearAddress(String texto) {
+        if (texto == null) return null;
+
+        return texto.replace("\n", "")
+                    .replace("\t", "")
+                    .replaceAll("[ \\u00A0]{2,}", "") 
+                    .trim();
     }
     
     private double extractNumeric(String text) {
