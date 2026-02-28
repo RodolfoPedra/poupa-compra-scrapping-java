@@ -4,8 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * Propriedades de configuração.
- * Lidas a partir do application.yml
+ * Propriedades de configuração do application.yml
  */
 @Component
 @ConfigurationProperties(prefix = "scraping")
