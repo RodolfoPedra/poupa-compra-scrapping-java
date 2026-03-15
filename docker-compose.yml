@@ -5,13 +5,19 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        JAVA_OPTS: "-XX:+UseZGC -XX:+ZGenerational -Xms256m -Xmx512m --enable-preview"
+        JAVA_DEBUG_OPTS: "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n"
     container_name: poupa-compra-scraping-java
+    # network_mode: bridge
     ports:
+      - "5005:5005"
       - "8181:8181"
     environment:
-      - JAVA_OPTS=-XX:+UseZGC -XX:+ZGenerational -Xms256m -Xmx512m --enable-preview
+      - SPRING_PROFILES_ACTIVE=local
       - SCRAPING_BROWSER_POOL_SIZE=3
       - SCRAPING_BROWSER_HEADLESS=true
+      - SCRAPING_BROWSER_EXECUTABLE_PATH=/usr/bin/chromium
       - SCRAPING_CACHE_TTL_HOURS=24
     restart: unless-stopped
     deploy:
@@ -27,8 +33,8 @@ services:
       retries: 3
       start_period: 60s
     networks:
-      - scraping-network
+      - local-teste
 
 networks:
-  scraping-network:
-    driver: bridge
+  local-teste:
+    external: true

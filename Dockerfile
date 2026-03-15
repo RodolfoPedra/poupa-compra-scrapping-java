@@ -8,35 +8,34 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests -B
 
-FROM eclipse-temurin:21-jre-alpine
+FROM azul/zulu-openjdk-debian:21
 
 WORKDIR /app
-
-RUN apk add --no-cache \
+ARG JAVA_OPTS 
+ARG JAVA_DEBUG_OPTS
+RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
-    chromium-chromedriver \
-    nss \
-    freetype \
-    harfbuzz \
+    fonts-freefont-ttf \
+    libnss3 \
+    libfreetype6 \
+    libharfbuzz0b \
     ca-certificates \
-    ttf-freefont \
+    iputils-ping \
     dbus \
-    udev \
-    && rm -rf /var/cache/apk/*
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-ENV PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
-COPY --from=builder /app/target/*.jar app.jar
+COPY --from=builder /app/target/ .
 
-ENV JAVA_OPTS="-XX:+UseZGC \
-    -XX:+ZGenerational \
-    -Xms256m \
-    -Xmx512m \
-    -XX:+UseStringDeduplication \
-    --enable-preview"
+ENV JAVA_OPTS=${JAVA_OPTS}
+ENV JAVA_DEBUG_OPTS=${JAVA_DEBUG_OPTS}
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:8181/hello || exit 1
 
-CMD [ "java","$JAVA_OPTS", "-jar", "app.jar" ]
+EXPOSE 5005 
+EXPOSE 8181
+
+CMD [ "sh", "-c", "java $JAVA_OPTS $JAVA_DEBUG_OPTS -jar poupa-compra-scraping-1.0.0.jar" ]
