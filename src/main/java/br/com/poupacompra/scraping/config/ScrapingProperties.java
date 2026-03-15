@@ -34,6 +34,7 @@ public class ScrapingProperties {
         private boolean headless = true;
         private int timeoutMs = 25000;
         private int pageLoadTimeoutMs = 30000;
+        private String executablePath;
         
         public int getPoolSize() {
             return poolSize;
@@ -65,6 +66,14 @@ public class ScrapingProperties {
         
         public void setPageLoadTimeoutMs(int pageLoadTimeoutMs) {
             this.pageLoadTimeoutMs = pageLoadTimeoutMs;
+        }
+
+        public String getExecutablePath() {
+            return executablePath;
+        }
+
+        public void setExecutablePath(String executablePath) {
+            this.executablePath = executablePath;
         }
     }
     

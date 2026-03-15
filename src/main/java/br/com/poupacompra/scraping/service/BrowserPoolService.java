@@ -1,5 +1,6 @@
 package br.com.poupacompra.scraping.service;
 
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -105,11 +106,17 @@ public class BrowserPoolService {
     }
     
     private BrowserInstance createBrowserInstance(int id, List<String> browserArgs) {
-        Browser browser = playwright.chromium().launch(
-            new BrowserType.LaunchOptions()
+        BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
                 .setHeadless(properties.getBrowser().isHeadless())
-                .setArgs(browserArgs)
-        );
+                .setArgs(browserArgs);
+
+        String executablePath = properties.getBrowser().getExecutablePath();
+        if (executablePath != null && !executablePath.isBlank()) {
+            launchOptions.setExecutablePath(Path.of(executablePath));
+            log.info("Usando executável do Chromium: {}", executablePath);
+        }
+
+        Browser browser = playwright.chromium().launch(launchOptions);
         
         BrowserContext context = browser.newContext(
             new Browser.NewContextOptions()
