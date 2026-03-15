@@ -20,7 +20,7 @@ import br.com.poupacompra.scraping.service.NfeScrapingService;
  * 
  * Endpoints:
  * - POST /dados-nota?url=<link> - Realiza scraping da NFCe
- * - POST /cache/clear - Limpa o cache
+ * - GET /cache/clear - Limpa o cache
  * - GET /cache/stats - Estatísticas do cache
  */
 @RestController
@@ -45,10 +45,11 @@ public class ScrapingController {
      * Endpoint principal para scraping de NFe.
      * 
      * @param url URL da NFe a ser processada
+     * @param idUsuario ID do usuário que está realizando a requisição
      * @return Dados extraídos da nota fiscal
      */
     @PostMapping("/dados-nota")
-    public ResponseEntity<DadosNotaResponseDTO> getDadosNota(@RequestParam("url") String url) {
+    public ResponseEntity<DadosNotaResponseDTO> getDadosNota(@RequestParam("urlNota") String url, @RequestParam(name = "idUsuario") Long idUsuario) {
         if (url == null || url.isBlank()) {
             throw new IllegalArgumentException("URL não fornecida");
         }
@@ -63,13 +64,13 @@ public class ScrapingController {
         log.info("✓ Request finalizada em {}ms", elapsed);
         log.info("=".repeat(60) + "\n");
         
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok().build();
     }
     
     /**
      * Limpa o cache manualmente.
      */
-    @PostMapping("/cache/clear")
+    @GetMapping("/cache/clear")
     public ResponseEntity<Map<String, Object>> clearCache() {
         long removed = cacheService.clearCache();
         return ResponseEntity.ok(Map.of(
