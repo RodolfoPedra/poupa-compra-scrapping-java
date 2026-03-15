@@ -8,7 +8,6 @@ services:
       args:
         JAVA_OPTS: "-XX:+UseZGC -XX:+ZGenerational -Xms256m -Xmx512m --enable-preview"
         JAVA_DEBUG_OPTS: "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n"
-    container_name: poupa-compra-scraping-java
     # network_mode: bridge
     ports:
       - "5005:5005"
