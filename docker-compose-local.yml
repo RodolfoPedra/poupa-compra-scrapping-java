@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
-  poupa-compra-scraping:
+  poupa-compra-scrapping:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_local
       args:
         JAVA_OPTS: "-XX:+UseZGC -XX:+ZGenerational -Xms256m -Xmx512m --enable-preview"
         JAVA_DEBUG_OPTS: "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n"
@@ -26,14 +24,14 @@ services:
         reservations:
           memory: 512M
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8181/hello"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8181/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 60s
     networks:
-      - local-teste
+      - local
 
 networks:
-  local-teste:
+  local:
     external: true

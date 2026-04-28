@@ -11,7 +11,8 @@ RUN mvn clean package -DskipTests -B
 FROM azul/zulu-openjdk-debian:21
 
 WORKDIR /app
-
+ARG JAVA_OPTS 
+ARG JAVA_DEBUG_OPTS
 RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
     fonts-freefont-ttf \
@@ -28,6 +29,13 @@ ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 COPY --from=builder /app/target/ .
 
+ENV JAVA_OPTS=${JAVA_OPTS}
+ENV JAVA_DEBUG_OPTS=${JAVA_DEBUG_OPTS}
+ENV SCRAPING_BROWSER_POOL_SIZE=3
+ENV SCRAPING_BROWSER_HEADLESS=true
+ENV SCRAPING_BROWSER_EXECUTABLE_PATH=/usr/bin/chromium
+
+EXPOSE 5005 
 EXPOSE 8181
 
-CMD [ "sh", "-c", "java -jar poupa-compra-scraping-1.0.0.jar" ]
+CMD [ "sh", "-c", "java $JAVA_OPTS $JAVA_DEBUG_OPTS -jar poupa-compra-scraping-1.0.0.jar" ]

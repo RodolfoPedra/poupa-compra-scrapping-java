@@ -8,6 +8,15 @@ server:
 spring:
   application:
     name: poupa-compra-scraping
+  cloud:
+    openfeign:
+      client:
+        config:
+          poupa-compra-api:
+            url: ${URL_POUPA_COMPRA_API}
+            connectTimeout: 5000
+            readTimeout: 5000
+            loggerLevel: full
   threads:
     virtual:
       enabled: true

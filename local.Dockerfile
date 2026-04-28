@@ -28,6 +28,12 @@ ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 COPY --from=builder /app/target/ .
 
+ENV SCRAPING_BROWSER_POOL_SIZE=3
+ENV SCRAPING_BROWSER_HEADLESS=true
+ENV SCRAPING_BROWSER_EXECUTABLE_PATH=/usr/bin/chromium
+ENV URL_POUPA_COMPRA_API=http://localhost:8182
+
+EXPOSE 5005
 EXPOSE 8181
 
 CMD [ "sh", "-c", "java -jar poupa-compra-scraping-1.0.0.jar" ]
