@@ -28,6 +28,4 @@ ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 COPY --from=builder /app/target/ .
 
-EXPOSE 8181
-
 CMD [ "sh", "-c", "java -jar poupa-compra-scraping-1.0.0.jar" ]
