@@ -32,7 +32,7 @@ public class ScrapingProperties {
     public static class Browser {
         private int poolSize = 3;
         private boolean headless = true;
-        private int timeoutMs = 25000;
+        private int timeoutMs = 20000;
         private int pageLoadTimeoutMs = 30000;
         private String executablePath;
         

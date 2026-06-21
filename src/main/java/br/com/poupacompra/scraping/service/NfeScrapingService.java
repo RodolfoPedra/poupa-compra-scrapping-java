@@ -243,8 +243,8 @@ public class NfeScrapingService {
             .valorTotal(extractNumeric((String) dadosPrincipais.get("valorTotal")))
             .usuario(3)
             .ufCfe(ufCfe)
-            .urlCfe(url + " via scrapping docker")
-            .chaveAcesso(dadosPrincipais.get("chaveAcesso") + " via scrapping docker")
+            .urlCfe(url)
+            .chaveAcesso(dadosPrincipais.get("chaveAcesso").toString())
             .build();
 
         return DadosNotaResponseDTO.builder()
