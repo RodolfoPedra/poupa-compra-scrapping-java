@@ -8,24 +8,14 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests -B
 
-FROM azul/zulu-openjdk-debian:21
+FROM mcr.microsoft.com/playwright/java:v1.58.0-jammy
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    chromium \
-    fonts-freefont-ttf \
-    libnss3 \
-    libfreetype6 \
-    libharfbuzz0b \
-    ca-certificates \
-    iputils-ping \
-    dbus \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
+RUN wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar -O opentelemetry-javaagent.jar
 
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 COPY --from=builder /app/target/ .
 
-CMD [ "sh", "-c", "java -jar poupa-compra-scraping-1.0.0.jar" ]
+CMD [ "sh", "-c", "java -javaagent:opentelemetry-javaagent.jar -jar poupa-compra-scraping-1.0.0.jar" ]

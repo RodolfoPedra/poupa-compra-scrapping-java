@@ -68,7 +68,7 @@ public class NfeScrapingService {
             long elapsed = System.currentTimeMillis() - startTime;
             log.info("✓ Scraping completo em {}ms", elapsed);
             
-            enviarParaApi(result);
+            // enviarParaApi(result);
             
             return result;
             

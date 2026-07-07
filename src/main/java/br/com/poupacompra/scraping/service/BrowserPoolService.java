@@ -1,5 +1,6 @@
 package br.com.poupacompra.scraping.service;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
@@ -110,9 +112,12 @@ public class BrowserPoolService {
                 .setHeadless(properties.getBrowser().isHeadless())
                 .setArgs(browserArgs);
 
-        String executablePath = properties.getBrowser().getExecutablePath();
-        if (executablePath != null && !executablePath.isBlank()) {
-            launchOptions.setExecutablePath(Path.of(executablePath));
+        Path executablePath = resolveExecutablePath(
+            properties.getBrowser().getExecutablePath(),
+            System.getenv("PLAYWRIGHT_BROWSERS_PATH")
+        );
+        if (executablePath != null) {
+            launchOptions.setExecutablePath(executablePath);
             log.info("Usando executável do Chromium: {}", executablePath);
         }
 
@@ -153,6 +158,31 @@ public class BrowserPoolService {
         return new BrowserInstance(id, browser, context, page);
     }
     
+    static Path resolveExecutablePath(String configuredExecutablePath, String playwrightBrowsersPath) {
+        if (StringUtils.hasText(configuredExecutablePath)) {
+            return Path.of(configuredExecutablePath);
+        }
+
+        if (!StringUtils.hasText(playwrightBrowsersPath)) {
+            return null;
+        }
+
+        List<Path> candidatePaths = List.of(
+            Path.of(playwrightBrowsersPath, "chromium_headless_shell-1208", "chrome-headless-shell-linux64", "chrome-headless-shell"),
+            Path.of(playwrightBrowsersPath, "chromium-1208", "chrome-linux64", "chrome"),
+            Path.of("/usr/bin/chromium"),
+            Path.of("/usr/bin/chromium-browser")
+        );
+
+        for (Path candidate : candidatePaths) {
+            if (Files.isExecutable(candidate)) {
+                return candidate;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Obtém um browser do pool. Bloqueia até que um esteja disponível.
      */
