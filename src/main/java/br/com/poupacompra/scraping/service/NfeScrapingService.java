@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.TimeoutError;
-import com.microsoft.playwright.options.WaitForSelectorState;
 import com.microsoft.playwright.options.WaitUntilState;
 
 import br.com.poupacompra.scraping.client.PoupaCompraApiClient;
@@ -28,6 +27,7 @@ import br.com.poupacompra.scraping.dto.ItemNotaDTO;
 import br.com.poupacompra.scraping.dto.NotaDTO;
 import br.com.poupacompra.scraping.exception.ScrapingException;
 import br.com.poupacompra.scraping.service.BrowserPoolService.BrowserInstance;
+import br.com.poupacompra.scraping.service.strategy.PagePreparationStrategyFactory;
 
 @Service
 public class NfeScrapingService {
@@ -39,11 +39,13 @@ public class NfeScrapingService {
     private final BrowserPoolService browserPoolService;
     private final ScrapingProperties properties;
     private final PoupaCompraApiClient poupaCompraApiClient;
+    private final PagePreparationStrategyFactory pagePreparationStrategyFactory;
     
-    public NfeScrapingService(BrowserPoolService browserPoolService, ScrapingProperties properties, PoupaCompraApiClient poupaCompraApiClient) {
+    public NfeScrapingService(BrowserPoolService browserPoolService, ScrapingProperties properties, PoupaCompraApiClient poupaCompraApiClient, PagePreparationStrategyFactory pagePreparationStrategyFactory) {
         this.browserPoolService = browserPoolService;
         this.properties = properties;
         this.poupaCompraApiClient = poupaCompraApiClient;
+        this.pagePreparationStrategyFactory = pagePreparationStrategyFactory;
     }
     
     /**
@@ -108,10 +110,12 @@ public class NfeScrapingService {
             
             log.debug("Página carregada, URL atual: {}...", truncateUrl(page.url(), 70));
             
-            // Aguarda reCAPTCHA e conteúdo
-            if (!waitForContent(page)) {
+            String effectiveUrl = waitForContent(page, url);
+            if (effectiveUrl == null) {
                 throw new ScrapingException("Página não carregou - possível bloqueio por reCAPTCHA ou timeout", url);
             }
+
+            return extractData(page, effectiveUrl);
             
         } catch (TimeoutError e) {
             log.error("Timeout ao acessar URL: {}", e.getMessage());
@@ -123,46 +127,43 @@ public class NfeScrapingService {
             throw new ScrapingException("Erro ao acessar página", url, e);
         }
         
-        // Extrai dados
-        return extractData(page, url);
     }
     
-    private boolean waitForContent(Page page) {
+    private String waitForContent(Page page, String url) {
         long startTime = System.currentTimeMillis();
         log.debug("  → Aguardando conteúdo carregar...");
-        
+
         try {
-            page.waitForSelector("#totalNota", new Page.WaitForSelectorOptions()
-                .setTimeout(properties.getBrowser().getTimeoutMs())
-                .setState(WaitForSelectorState.ATTACHED));
-            
-            long elapsed = System.currentTimeMillis() - startTime;
-            log.debug("Elemento 'totalNota' encontrado em {}ms", elapsed);
-            
-            page.waitForSelector("#totalNota", new Page.WaitForSelectorOptions()
-                .setTimeout(3000)
-                .setState(WaitForSelectorState.VISIBLE));
-            
-            log.debug("Página totalmente carregada em {}ms", System.currentTimeMillis() - startTime);
-            return true;
-            
-        } catch (TimeoutError e) {
-            long elapsed = System.currentTimeMillis() - startTime;
-            log.warn("Timeout após {}ms", elapsed);
-            log.warn("URL atual: {}", page.url());
-            
-            try {
-                String bodyText = page.locator("body").textContent(new Locator.TextContentOptions().setTimeout(2000));
-                log.warn("Conteúdo da página: {}", bodyText.substring(0, Math.min(300, bodyText.length())));
-            } catch (Exception ex) {
-                log.warn("Não foi possível ler conteúdo da página");
+            boolean prepared = pagePreparationStrategyFactory.getStrategy(url)
+                .prepare(page, url, properties);
+            log.info("  → Status da preparação da página: {}", prepared);
+            if (!prepared) {
+                long elapsed = System.currentTimeMillis() - startTime;
+                log.warn("Timeout após {}ms", elapsed);
+                log.warn("URL atual: {}", page.url());
+
+                try {
+                    String bodyText = page.locator("body").textContent(new Locator.TextContentOptions().setTimeout(2000));
+                    log.warn("Conteúdo da página: {}", bodyText.substring(0, Math.min(300, bodyText.length())));
+                } catch (Exception ex) {
+                    log.warn("Não foi possível ler conteúdo da página");
+                }
+                return null;
             }
-            
-            return false;
+
+            return resolveEffectiveUrl(url, page.url());
         } catch (Exception e) {
             log.error("✗ Erro inesperado: {}", e.getMessage());
-            return false;
+            return null;
         }
+    }
+
+    public static String resolveEffectiveUrl(String originalUrl, String currentUrl) {
+        log.info("originalUrl = {}, currentUrl = {}", originalUrl, currentUrl);
+        if (currentUrl == null || currentUrl.isBlank()) {
+            return originalUrl;
+        }
+        return currentUrl;
     }
     
     @SuppressWarnings("unchecked")
