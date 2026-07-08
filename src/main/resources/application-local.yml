@@ -1,3 +1,5 @@
+server:
+  port: 8181
 spring:
   address: 0.0.0.0
   cloud:
@@ -5,7 +7,7 @@ spring:
       client:
         config:
           poupa-compra-api:
-            url: http://localhost:8182
+            url: http://poupacompra-integracao:8182
             connectTimeout: 5000
             readTimeout: 5000
             loggerLevel: full

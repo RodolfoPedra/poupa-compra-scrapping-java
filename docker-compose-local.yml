@@ -2,7 +2,7 @@ services:
   poupa-compra-scrapping:
     build:
       context: .
-      dockerfile: Dockerfile_local
+      dockerfile: debug.Dockerfile
       args:
         JAVA_OPTS: "-XX:+UseZGC -XX:+ZGenerational -Xms256m -Xmx512m --enable-preview"
         JAVA_DEBUG_OPTS: "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n"
@@ -14,7 +14,6 @@ services:
       - SPRING_PROFILES_ACTIVE=local
       - SCRAPING_BROWSER_POOL_SIZE=3
       - SCRAPING_BROWSER_HEADLESS=true
-      - SCRAPING_BROWSER_EXECUTABLE_PATH=/usr/bin/chromium
       - SCRAPING_CACHE_TTL_HOURS=24
     restart: unless-stopped
     deploy:
