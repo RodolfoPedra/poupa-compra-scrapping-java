@@ -13,14 +13,16 @@ FROM mcr.microsoft.com/playwright/java:v1.58.0-jammy
 WORKDIR /app
 ARG JAVA_OPTS
 ARG JAVA_DEBUG_OPTS
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Sao_Paulo
 
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 ENV SCRAPING_BROWSER_POOL_SIZE=3
 ENV SCRAPING_BROWSER_HEADLESS=false
 ENV SCRAPING_DEBUG_UI=true
-ENV DEBIAN_FRONTEND=noninteractive
 
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y --no-install-recommends \
     xvfb \
     x11vnc \
