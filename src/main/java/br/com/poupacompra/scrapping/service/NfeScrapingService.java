@@ -116,8 +116,7 @@ public class NfeScrapingService {
                 throw new ScrapingException("Página não carregou - possível bloqueio por reCAPTCHA ou timeout", url);
             }
 
-            return new DadosNotaResponseDTO();
-            // return extractData(page, effectiveUrl);
+            return extractData(page, effectiveUrl);
             
         } catch (TimeoutError e) {
             log.error("Timeout ao acessar URL: {}", e.getMessage());
