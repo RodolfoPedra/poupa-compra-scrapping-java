@@ -42,4 +42,4 @@ if [ -z "$jar_file" ]; then
 fi
 
 echo "Iniciando aplicação com ${jar_file}"
-exec java -jar "$jar_file"
+exec java $JAVA_OPTS $JAVA_DEBUG_OPTS -jar "$jar_file"

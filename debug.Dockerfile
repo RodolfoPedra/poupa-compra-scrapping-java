@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY exemplos ./exemplos
 COPY --from=builder /app/target/ .
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY entrypoint-local.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENV JAVA_OPTS=${JAVA_OPTS}
