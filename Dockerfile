@@ -10,12 +10,29 @@ RUN mvn clean package -DskipTests -B
 
 FROM mcr.microsoft.com/playwright/java:v1.58.0-jammy
 
-WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    xvfb \
+    x11vnc \
+    novnc \
+    websockify \
+    fluxbox \
+    wget \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar -O opentelemetry-javaagent.jar
+WORKDIR /app
+COPY --from=builder /app/target/ .
+    
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+ENV SCRAPING_BROWSER_POOL_SIZE=3
+ENV SCRAPING_BROWSER_HEADLESS=false
+ENV SCRAPING_DEBUG_UI=true
+ENV DEBIAN_FRONTEND=noninteractive
 
-COPY --from=builder /app/target/ .
 
-CMD [ "sh", "-c", "java -javaagent:opentelemetry-javaagent.jar -jar poupa-compra-scraping-1.0.0.jar" ]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
