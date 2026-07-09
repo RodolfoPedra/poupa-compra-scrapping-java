@@ -2,7 +2,6 @@ package br.com.poupacompra.scrapping.service;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -28,12 +27,46 @@ import jakarta.annotation.PreDestroy;
 
 @Service
 public class BrowserPoolService {
+        private static final List<String> DEFAULT_BROWSER_ARGS = List.of(
+            "--disable-blink-features=AutomationControlled",
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-accelerated-2d-canvas",
+            "--no-first-run",
+            "--no-zygote",
+            "--disable-gpu",
+            "--disable-web-security",
+            "--allow-running-insecure-content",
+            "--ignore-certificate-errors",
+            "--disable-features=IsolateOrigins,site-per-process",
+            "--disable-background-timer-throttling",
+            "--disable-backgrounding-occluded-windows",
+            "--disable-renderer-backgrounding",
+            "--disable-background-networking",
+            "--disable-breakpad",
+            "--disable-component-extensions-with-background-pages",
+            "--disable-extensions",
+            "--disable-features=TranslateUI,BlinkGenPropertyTrees",
+            "--disable-ipc-flooding-protection",
+            "--disable-hang-monitor",
+            "--disable-popup-blocking",
+            "--disable-prompt-on-repost",
+            "--disable-sync",
+            "--force-color-profile=srgb",
+            "--metrics-recording-only",
+            "--no-default-browser-check",
+            "--password-store=basic",
+            "--use-mock-keychain"
+        );
+
     
     private static final Logger log = LoggerFactory.getLogger(BrowserPoolService.class);
     
     private final ScrappingProperties properties;
     private final BlockingQueue<BrowserInstance> browserPool;
     private final AtomicInteger browsersAvailable;
+    private final List<String> browserArgs;
     
     private Playwright playwright;
     private volatile boolean initialized = false;
@@ -49,6 +82,7 @@ public class BrowserPoolService {
         this.properties = properties;
         this.browserPool = new LinkedBlockingQueue<>(properties.getBrowser().getPoolSize());
         this.browsersAvailable = new AtomicInteger(0);
+        this.browserArgs = DEFAULT_BROWSER_ARGS;
     }
 
     @PostConstruct
@@ -64,39 +98,6 @@ public class BrowserPoolService {
         try {
             playwright = Playwright.create();
 
-            List<String> browserArgs = Arrays.asList(
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-dev-shm-usage",
-                "--disable-accelerated-2d-canvas",
-                "--no-first-run",
-                "--no-zygote",
-                "--disable-gpu",
-                "--disable-web-security",
-                "--allow-running-insecure-content",
-                "--ignore-certificate-errors",
-                "--disable-features=IsolateOrigins,site-per-process",
-                "--disable-background-timer-throttling",
-                "--disable-backgrounding-occluded-windows",
-                "--disable-renderer-backgrounding",
-                "--disable-background-networking",
-                "--disable-breakpad",
-                "--disable-component-extensions-with-background-pages",
-                "--disable-extensions",
-                "--disable-features=TranslateUI,BlinkGenPropertyTrees",
-                "--disable-ipc-flooding-protection",
-                "--disable-hang-monitor",
-                "--disable-popup-blocking",
-                "--disable-prompt-on-repost",
-                "--disable-sync",
-                "--force-color-profile=srgb",
-                "--metrics-recording-only",
-                "--no-default-browser-check",
-                "--password-store=basic",
-                "--use-mock-keychain"
-            );
-            
             for (int i = 0; i < properties.getBrowser().getPoolSize(); i++) {
                 BrowserInstance instance = createBrowserInstance(i, browserArgs);
                 browserPool.offer(instance);
@@ -236,12 +237,40 @@ public class BrowserPoolService {
     public void releaseBrowser(BrowserInstance instance) {
         if (instance != null) {
             try {
-                browserPool.offer(instance);
+                BrowserInstance recycledInstance = createBrowserInstance(instance.id(), browserArgs);
+                closeInstance(instance);
+                browserPool.offer(recycledInstance);
                 browsersAvailable.incrementAndGet();
-                log.debug("✓ Browser {} retornado ao pool", instance.id());
+                log.debug("✓ Browser {} reciclado e retornado ao pool", instance.id());
             } catch (Exception e) {
-                log.warn("⚠ Erro ao retornar browser {} ao pool", instance.id(), e);
+                log.warn("⚠ Erro ao reciclar browser {}. Tentando retornar instância atual", instance.id(), e);
+                try {
+                    browserPool.offer(instance);
+                    browsersAvailable.incrementAndGet();
+                } catch (Exception fallbackError) {
+                    log.error("✗ Falha ao retornar browser {} ao pool após erro de reciclagem", instance.id(), fallbackError);
+                }
             }
+        }
+    }
+
+    private void closeInstance(BrowserInstance instance) {
+        try {
+            instance.page().close();
+        } catch (Exception e) {
+            log.debug("Falha ao fechar page do browser {} durante reciclagem", instance.id(), e);
+        }
+
+        try {
+            instance.context().close();
+        } catch (Exception e) {
+            log.debug("Falha ao fechar context do browser {} durante reciclagem", instance.id(), e);
+        }
+
+        try {
+            instance.browser().close();
+        } catch (Exception e) {
+            log.debug("Falha ao fechar browser {} durante reciclagem", instance.id(), e);
         }
     }
     
