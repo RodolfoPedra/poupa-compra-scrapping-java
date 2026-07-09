@@ -35,6 +35,7 @@ public class ScrappingProperties {
     public static class Browser {
         private int poolSize = 3;
         private boolean headless = true;
+        private boolean debugUiEnabled = false;
         private int timeoutMs = 20000;
         private int pageLoadTimeoutMs = 30000;
         private String executablePath;
@@ -53,6 +54,14 @@ public class ScrappingProperties {
         
         public void setHeadless(boolean headless) {
             this.headless = headless;
+        }
+
+        public boolean isDebugUiEnabled() {
+            return debugUiEnabled;
+        }
+
+        public void setDebugUiEnabled(boolean debugUiEnabled) {
+            this.debugUiEnabled = debugUiEnabled;
         }
         
         public int getTimeoutMs() {

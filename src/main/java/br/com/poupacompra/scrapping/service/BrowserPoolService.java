@@ -54,6 +54,12 @@ public class BrowserPoolService {
     @PostConstruct
     public void init() {
         log.info("Inicializando pool de {} browsers...", properties.getBrowser().getPoolSize());
+        log.info(
+            "Configuração do browser: headless={}, debug-ui-enabled={}, display={}",
+            properties.getBrowser().isHeadless(),
+            isDebugUiEnabled(),
+            System.getenv("DISPLAY")
+        );
         
         try {
             playwright = Playwright.create();
@@ -108,17 +114,25 @@ public class BrowserPoolService {
     }
     
     private BrowserInstance createBrowserInstance(int id, List<String> browserArgs) {
+        boolean debugUiEnabled = isDebugUiEnabled();
+        boolean headless = properties.getBrowser().isHeadless() || !debugUiEnabled;
+
         BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
-                .setHeadless(properties.getBrowser().isHeadless())
+            .setHeadless(headless)
                 .setArgs(browserArgs);
 
         Path executablePath = resolveExecutablePath(
             properties.getBrowser().getExecutablePath(),
-            System.getenv("PLAYWRIGHT_BROWSERS_PATH")
+            System.getenv("PLAYWRIGHT_BROWSERS_PATH"),
+            headless
         );
         if (executablePath != null) {
             launchOptions.setExecutablePath(executablePath);
             log.info("Usando executável do Chromium: {}", executablePath);
+        }
+
+        if (!headless) {
+            log.info("Browser {} iniciado em modo visual para debug", id);
         }
 
         Browser browser = playwright.chromium().launch(launchOptions);
@@ -157,8 +171,13 @@ public class BrowserPoolService {
         
         return new BrowserInstance(id, browser, context, page);
     }
+
+    private boolean isDebugUiEnabled() {
+        return properties.getBrowser().isDebugUiEnabled()
+            || Boolean.parseBoolean(System.getenv("SCRAPING_DEBUG_UI"));
+    }
     
-    static Path resolveExecutablePath(String configuredExecutablePath, String playwrightBrowsersPath) {
+    static Path resolveExecutablePath(String configuredExecutablePath, String playwrightBrowsersPath, boolean headless) {
         if (StringUtils.hasText(configuredExecutablePath)) {
             return Path.of(configuredExecutablePath);
         }
@@ -167,12 +186,18 @@ public class BrowserPoolService {
             return null;
         }
 
-        List<Path> candidatePaths = List.of(
-            Path.of(playwrightBrowsersPath, "chromium_headless_shell-1208", "chrome-headless-shell-linux64", "chrome-headless-shell"),
-            Path.of(playwrightBrowsersPath, "chromium-1208", "chrome-linux64", "chrome"),
-            Path.of("/usr/bin/chromium"),
-            Path.of("/usr/bin/chromium-browser")
-        );
+        List<Path> candidatePaths = headless
+            ? List.of(
+                Path.of(playwrightBrowsersPath, "chromium-1208", "chrome-linux64", "chrome"),
+                Path.of(playwrightBrowsersPath, "chromium_headless_shell-1208", "chrome-headless-shell-linux64", "chrome-headless-shell"),
+                Path.of("/usr/bin/chromium"),
+                Path.of("/usr/bin/chromium-browser")
+            )
+            : List.of(
+                Path.of(playwrightBrowsersPath, "chromium-1208", "chrome-linux64", "chrome"),
+                Path.of("/usr/bin/chromium"),
+                Path.of("/usr/bin/chromium-browser")
+            );
 
         for (Path candidate : candidatePaths) {
             if (Files.isExecutable(candidate)) {
