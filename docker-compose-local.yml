@@ -14,7 +14,7 @@ services:
       - "6080:6080"
     environment:
       - SPRING_PROFILES_ACTIVE=local
-      - SCRAPING_BROWSER_POOL_SIZE=3
+      - SCRAPING_BROWSER_POOL_SIZE=1
       - SCRAPING_BROWSER_HEADLESS=false
       - SCRAPING_DEBUG_UI=true
       - SCRAPING_BROWSER_DEBUG_UI_ENABLED=true

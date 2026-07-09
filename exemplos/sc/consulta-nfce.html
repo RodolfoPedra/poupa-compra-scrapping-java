@@ -1,0 +1,401 @@
+<body class="sat-bs" style="">
+    <form method="post" action="./ConsultaPublicaNFCe.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="Main" class="sat-ui-form">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNTgyMzQzODEyDxYIHgdfcGFnZUlEBSQ2NzQwODg0Yy00ZDgxLTQxNzUtOTMxYy1lMGVjMTQ5YjAwNGEeD0FwcGxpY2F0aW9uTmFtZQUmU2lzdGVtYSBkZSBBZG1pbmlzdHJhw6fDo28gVHJpYnV0w6FyaWEeO1NhdC5GcmFtZXdvcmsuV2ViLlBhZ2VFeHRlbnNpb25zLkNvbnRyb2xzUmVnaXN0ZXJlZFRvSGVhZGVyMucDAAEAAAD/////AQAAAAAAAAAEAQAAAH9TeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5MaXN0YDFbW1N5c3RlbS5TdHJpbmcsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OV1dAwAAAAZfaXRlbXMFX3NpemUIX3ZlcnNpb24GAAAICAkCAAAADwAAAA8AAAARAgAAABAAAAAGAwAAAAdmYXZpY29uBgQAAAAQY3NzRm9udC1NYXRlcmlhbAYFAAAADmNzc0ZvbnQtUm9ib3RvBgYAAAAMY3NzQm9vdHN0cmFwBgcAAAASY3NzRm9udC1HbHlwaGljb25zBggAAAAHY3NzUGFnZQYJAAAAFGNzc1ZhbGlkYXRpb25TdW1tYXJ5BgoAAAAJUGFnZVRoZW1lBgsAAAAMY3NzQmFzZVBhbmVsBgwAAAAJY3NzV2luZG93Bg0AAAAOY3NzSWNvbkNvbnRyb2wGDgAAAA1jc3NCYXNlQnV0dG9uBg8AAAAMY3NzQmFzZUFsZXJ0BhAAAAAMY3NzVGV4dEZpZWxkBhEAAAARY3NzVXBkYXRlUHJvZ3Jlc3MKCx45U2F0LkZyYW1ld29yay5XZWIuUGFnZUV4dGVuc2lvbnMuQ29udHJvbHNSZWdpc3RlcmVkU2NyaXB0MuYHAAEAAAD/////AQAAAAAAAAAEAQAAAH9TeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5MaXN0YDFbW1N5c3RlbS5TdHJpbmcsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OV1dAwAAAAZfaXRlbXMFX3NpemUIX3ZlcnNpb24GAAAICAkCAAAAEAAAABAAAAARAgAAABAAAAAGAwAAADdTYXQuRnJhbWV3b3JrLldlYi5VSS5XZWJSZXNvdXJjZXMuSmF2YVNjcmlwdHMuSlF1ZXJ5LmpzBgQAAAA+U2F0LkZyYW1ld29yay5XZWIuVUkuV2ViUmVzb3VyY2VzLkphdmFTY3JpcHRzLkpRdWVyeS1Db29raWUuanMGBQAAAEJTYXQuRnJhbWV3b3JrLldlYi5VSS5XZWJSZXNvdXJjZXMuSmF2YVNjcmlwdHMuSlF1ZXJ5LVNsaW1TY3JvbGwuanMGBgAAADpTYXQuRnJhbWV3b3JrLldlYi5VSS5XZWJSZXNvdXJjZXMuSmF2YVNjcmlwdHMuQm9vdHN0cmFwLmpzBgcAAAA5U2F0LkZyYW1ld29yay5XZWIuVUkuV2ViUmVzb3VyY2VzLkphdmFTY3JpcHRzLkludGVybmFsLmpzBggAAAA6U2F0LkZyYW1ld29yay5XZWIuVUkuV2ViUmVzb3VyY2VzLkphdmFTY3JpcHRzLlByb3RvdHlwZS5qcwYJAAAANFNhdC5GcmFtZXdvcmsuV2ViLlVJLldlYlJlc291cmNlcy5KYXZhU2NyaXB0cy5TYXQuanMGCgAAADtTYXQuRnJhbWV3b3JrLldlYi5VSS5XZWJSZXNvdXJjZXMuSmF2YVNjcmlwdHMuSW5pdGlhbGl6ZS5qcwYLAAAATlNhdC5GcmFtZXdvcmsuV2ViLlVJLldlYkNvbnRyb2xzLldlYlJlc291cmNlcy5KYXZhU2NyaXB0cy5WYWxpZGF0aW9uU3VtbWFyeS5qcwYMAAAARlNhdC5GcmFtZXdvcmsuV2ViLlVJLldlYkNvbnRyb2xzLldlYlJlc291cmNlcy5KYXZhU2NyaXB0cy5CYXNlUGFuZWwuanMGDQAAAEdTYXQuRnJhbWV3b3JrLldlYi5VSS5XZWJDb250cm9scy5XZWJSZXNvdXJjZXMuSmF2YVNjcmlwdHMuQmFzZUJ1dHRvbi5qcwkNAAAACQwAAAAJDQAAAAkNAAAABhAAAAAQVXBkYXRlUHJvZ3Jlc3NJRAsWAmYPZBYCZg9kFgJmD2QWAgIDD2QWAgIHD2QWBmYPDxYCHkBTYXQuV2ViLlVJLk1hc3RlclBhZ2VzLkNvbnRyb2xzLkFwcGxpY2F0aW9uTWFzdGVySGVhZGVyLlVzZXJuYW1lZWQWDmYPDxYCHgdWaXNpYmxlaGQWAmYPFgIeC18hSXRlbUNvdW50Av////8PZAIBDxYCHwVoZAICD2QWAgIBDxYEHgVjbGFzcwUic2F0LXVpLWVudmlyb25tZW50LW5hbWUtdGV4dCBiYWRnZR8FaGQCAw8WAh8FaBYCAgEPZBYCZg8PFgIeDlNlbGVjdGVkVmFsdWVzFQBkZAIEDxYCHwVoFgRmD2QWAgIDD2QWAgIBD2QWAgIBD2QWAgIBD2QWAmYPZBYGZg9kFgICAQ8PFgIeEEFwcExpbmtVcmxGb3JtYXQFPXdpbmRvdy5vcGVuKCcuLi8uLi9Hby5hc2h4P2FwcD17MH0mc291cmNlPXsxfScpO3JldHVybiBmYWxzZTtkFgJmDxYCHwYC/////w9kAgEPZBYCAgEPDxYCHwkFPXdpbmRvdy5vcGVuKCcuLi8uLi9Hby5hc2h4P2FwcD17MH0mc291cmNlPXsxfScpO3JldHVybiBmYWxzZTtkFgJmDxYCHwYC/////w9kAgIPZBYCAgEPDxYCHwkFPXdpbmRvdy5vcGVuKCcuLi8uLi9Hby5hc2h4P2FwcD17MH0mc291cmNlPXsxfScpO3JldHVybiBmYWxzZTtkFgJmDxYCHwYC/////w9kAgEPFgIfBWgWAgIBD2QWAgICDxUBFy4uLy4uL05vdGlmaWNhY29lcy5hc3B4ZAIFDxYCHwVoFgQCAQ8WAh8FaGQCAw9kFgJmDxYCHwVoFgJmD2QWAmYPFgIfBWgWAmYPFgIfBgL/////D2QCBw9kFgRmDxYCHwcFF3NhdC11aS1lbnZpcm9ubWVudC1pbmZvFgQCAQ8WAh4JaW5uZXJodG1sBQROUEUxZAIDDxYEHwoFDEFuJiMyNDQ7bmltbx8FaGQCAQ9kFgJmDw8WBB4IQ3NzQ2xhc3MFIXNhdC11aS13aW5kb3ctZXhwaXJpbmcgbW9kYWwgZmFkZR4EXyFTQgICZBYCZg9kFgJmD2QWBGYPDxYEHwsFDG1vZGFsLWhlYWRlch8MAgJkZAIBDw8WBB8LBRRzYXQtcGFuZWwtY29udGVudCBpbh8MAgJkFgRmDw8WBB8LBQptb2RhbC1ib2R5HwwCAmRkAgEPZBYCZg9kFgJmD2QWBGYPDxYCHg1PbkNsaWVudENsaWNrBWpBcHBsaWNhdGlvbk1hc3RlckVudmlyb25tZW50SW5mby5SZWZyZXNoQXV0aEV4cGlyYXRpb25Db29raWVzKGZhbHNlLCAnLkFTUFhTQVRUQVhORVRMT0dJTicpOyByZXR1cm4gZmFsc2U7ZGQCAQ8PFgIfDQU9QXBwbGljYXRpb25NYXN0ZXJFbnZpcm9ubWVudEluZm8uTG9nb3V0KGZhbHNlKTsgcmV0dXJuIGZhbHNlO2RkAgEPZBYCAgEPDxYCHwVoZGQCAg9kFgICAQ9kFgICAQ8PFgQfCwUTcGFuZWwgcGFuZWwtZGVmYXVsdB8MAgJkFghmDw8WBB8LBR9wYW5lbC1oZWFkaW5nIHNhdC1wYW5lbC1oZWFkaW5nHwwCAmRkAgEPDxYEHwsFFHNhdC1wYW5lbC1jb250ZW50IGluHwwCAmQWAmYPDxYEHwsFCnBhbmVsLWJvZHkfDAICZBYCAgEPZBYCZg9kFgQCAQ9kFgICAQ8PFgIeBV9UZXh0BcQCMS4gQSA8Yj5DaGF2ZSBkZSBBY2Vzc288L2I+IMOpIHVtYSBzZXF1w6puY2lhIGRlIDQ0IGNhcmFjdGVyZXMgYWxmYW51bcOpcmljb3MuDQogICAgICAgIEVsYSBwb2RlIHNlciBlbmNvbnRyYWRhIG5vIERvY3VtZW50byBBdXhpbGlhciBkYSBOb3RhIEZpc2NhbCBkZSBDb25zdW1pZG9yIEVsZXRyw7RuaWNhIC0gPGI+REFORkU8L2I+Lg0KICAgICAgICA8YnIvPjxici8+Mi4gUGFyYSBxdWUgYSBjb25zdWx0YSBmdW5jaW9uZSBjb3JyZXRhbWVudGUsIMOpIG5lY2Vzc8OhcmlvIHF1ZSBvIDxiPnNldSBuYXZlZ2Fkb3IgYWNlaXRlIG8gdXNvIGRlICdjb29raWVzJzwvYj4uZGQCAw9kFgICAQ8PFgQeEEludGVybmFsUmVhZE9ubHloHghSZWFkT25seWhkZAIDDw8WAh4HRW5hYmxlZGhkZAIEDw8WAh8RaGRkZATEHcMZXVbZR4cTb5ZvsJXaSIni">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Main'];
+if (!theForm) {
+    theForm = document.Main;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/tax.NET/WebResource.axd?d=UAJ1aQIOaAYd4rvzqUeWTOJ4sxEPw0nqOGbLviGVr7YVZilyrpBDirsQSgI1&amp;t=638901428248157332" type="text/javascript"></script>
+
+
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/JQuery.js?t=kVFXcM6M" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/JQuery-Cookie.js?t=Hjqf8SUh" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/JQuery-SlimScroll.js?t=aRurJQQ4" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/Bootstrap.js?t=q7DimDod" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/Internal.js?t=oD7TJM1z" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/Prototype.js?t=Lq7dOi1h" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/Sat.js?t=VY7XusE6" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/Initialize.js?t=SNB96Oz7" type="text/javascript"></script>
+<script src="JavaScriptResourceHandler.axd" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/ValidationSummary.js?t=8B17WauD" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/BasePanel.js?t=JymVKOD1" type="text/javascript"></script>
+<script src="https://app.sat.sef.sc.gov.br/fwk-res/net48/BaseButton.js?t=sUivh6kY" type="text/javascript"></script>
+<script src="/tax.NET/ScriptResource.axd?d=nwzZt1kSN5rUsqq2pevTj75rf6jnAdu13rYcIdDAHHKW_B7rmqjS2at-lsqegXdYof5sJCz0oZ9Sxl3emzQtYr2Vi9o8Kys2gSpRTl1sG4GY69fqXj3NGK2nhGs1&amp;t=ffffffff93d1c106" type="text/javascript"></script>
+<script src="/tax.NET/ScriptResource.axd?d=_zcAn_M7bn3ZyxvOPu2CzAlsJBas2ApKuqhdwMFuLTBZkf0jcF7pakdhGBnCVg6ZtJ5hqKcGzQyxfPidXyGuW2Q06XNUfI_DQo2vraq3HW4Q2Cp0rmrHnVBr9BgKwhuXfVkWKA2&amp;t=5c0e0825" type="text/javascript"></script>
+<script src="/tax.NET/ScriptResource.axd?d=9Q_XeFEOztfvqm9l9TKs2PKQZmfAwMnTkDSrASxuUn_9Cjaeyq3oKDVY-8zaHQHVIW0rDWsAihLrErQ2FmV4oX-jtlpHqkrhGHGJZK1xZPQQ7s1jCa7my88DQHtGCCbsUb123PIpUm5A9-5z0&amp;t=5c0e0825" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="A2F186C1">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAcPsDqY9F1ENprnLgiIFhAAUTXNvFodWRHm9t4HXTXoNt3w8xd/HaQH7jch5eJNC1LbnRe2w2Rrn9Al/Lji50vckQR2eSN+/yVBw8HMH5PvGZ2UEox7OKzLUkfLSyLWRVDa7jJCGvy9IHNy7/vxO52Gdh4AIAStWfJM1o0QHLZ2ti6wQHk=">
+</div>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl00$ctl00$scmMain', 'Main', ['fctl00$ctl00$ctl00$ctnPageWindows','ctnPageWindows','fctl00$ctl00$ctl00$Body$ApplicationMasterHeader$ApplicationMasterEnvironmentInfo$winExpiring$uppPanelButtons','Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring_uppPanelButtons','fctl00$ctl00$ctl00$Body$Main$Main$sepConsultaNFCe$uppSepConsultaNFe','Body_Main_Main_sepConsultaNFCe_uppSepConsultaNFe','fctl00$ctl00$ctl00$Body$Main$Main$sepConsultaNFCe$uppPanelButtons','Body_Main_Main_sepConsultaNFCe_uppPanelButtons','fctl00$ctl00$ctl00$updatableContainer','updatableContainer'], ['ctl00$ctl00$ctl00$Body$ApplicationMasterHeader$ApplicationMasterEnvironmentInfo$winExpiring$btnRefreshExpiration','Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring_btnRefreshExpiration','ctl00$ctl00$ctl00$Body$ApplicationMasterHeader$ApplicationMasterEnvironmentInfo$winExpiring$btnSessionExpiredOK','Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring_btnSessionExpiredOK','ctl00$ctl00$ctl00$Body$ApplicationMasterHeader$ApplicationMasterEnvironmentInfo$winExpiring','Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring','ctl00$ctl00$ctl00$Body$Main$Main$sepConsultaNFCe$btnBuscar','Body_Main_Main_sepConsultaNFCe_btnBuscar','ctl00$ctl00$ctl00$Body$Main$Main$sepConsultaNFCe$btnLimpar','Body_Main_Main_sepConsultaNFCe_btnLimpar','ctl00$ctl00$ctl00$Body$Main$Main$sepConsultaNFCe','Body_Main_Main_sepConsultaNFCe','ctl00$ctl00$ctl00$postBackEventHandler','postBackEventHandler'], [], 90, 'ctl00$ctl00$ctl00');
+//]]>
+</script>
+
+        <div id="vasMain" style="display:none;">
+
+</div>
+		<div id="ctnPageWindows">
+
+</div>
+        
+    
+<header class="navbar navbar-fixed-top sat-ui-topbar sat-inline-flex">
+    <div class="sat-ui-topbar-left">
+        
+        <a class="sat-ui-topbar-logo sat-transition" href="/tax.NET/" onclick="Sat.ShowUpdateProgress();"></a>
+        
+        
+<div class="sat-ui-environment-name sat-transition">
+    
+</div>
+    </div>
+    
+    <div class="sat-ui-topbar-right">
+        <ul class="nav navbar-nav">
+            
+            
+            
+                <li>
+                    <a id="Body_ApplicationMasterHeader_hlkLogin" href="../../Login.aspx">
+                        <span class="material-symbols-rounded" style="margin-right: 28px;">lock</span>
+                        <span class="sat-icon-text" style="padding-top: 3px; position: absolute; right: 0;">Entrar</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+</header>
+<div id="Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_divEnvironmentInfo" class="sat-ui-environment-info" style="">
+    <div id="Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_divEnvironmentMachineName" class="sat-ui-environment-machine-name">NPE1</div>
+    
+    <div id="Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_divEnvironmentSessionTimer" class="sat-ui-environment-session-timer">Sua sessão expira em 59:54</div>
+</div>
+<span id="spnEnvironmentInfoPrint" class="sat-ui-environment-info-print sat-hideonscreen sat-showonprint">
+    SAT - Sistema de Administração Tributária: Impresso por <b>Anônimo</b> no servidor <b>NPE1</b>
+</span>
+<div id="Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring" class="sat-ui-window-expiring modal fade" tabindex="-1">
+	<div class="modal-dialog" style="width:360px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="panel-title sat-panel-title">
+					<i></i><span class="sat-panel-title-text">Atenção</span>
+				</div>
+			</div><div class="sat-panel-content in">
+				<div class="modal-body">
+					
+            <span id="winExpiringMsg">Sua sessão expira em 59:54</span>
+        
+				</div><div class="modal-footer">
+					<div id="Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring_uppPanelButtons">
+						<a class="btn btn-primary " onclick="ApplicationMasterEnvironmentInfo.RefreshAuthExpirationCookies(false, '.ASPXSATTAXNETLOGIN'); return false;" id="Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring_btnRefreshExpiration" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ctl00$ctl00$Body$ApplicationMasterHeader$ApplicationMasterEnvironmentInfo$winExpiring$btnRefreshExpiration&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))"><span class="sat-btn-text">Continuar conectado</span></a><a class="btn btn-default " onclick="ApplicationMasterEnvironmentInfo.Logout(false); return false;" id="Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring_btnSessionExpiredOK" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ctl00$ctl00$Body$ApplicationMasterHeader$ApplicationMasterEnvironmentInfo$winExpiring$btnSessionExpiredOK&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))" style="display: none;"><span class="sat-btn-text">OK</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../../MasterPages/Controls/WebResources/JavaScripts/ApplicationMasterEnvironmentInfo.js"></script>
+
+
+<link href="../../WebResources/StyleSheets/IncompatibleBrowserMessage.css" rel="stylesheet">
+<script type="text/javascript" src="../../WebResources/JavaScripts/BrowserVerifier.js"></script>
+
+<div id="divIncompatibleBrowserMessage" class="incompatible-browser-message" style="display: none;">
+    <div class="incompatible-browser-message-msg">
+        <p>Prezado usuário, você está utilizando:</p>
+        <p style="text-align: center;"><strong><span id="spnIncompatibleBrowserMessageCurrentBrowser"></span></strong></p>
+        <p><strong>Futuramente esse <span id="spnIncompatibleBrowserMessageCurrentConfig"></span> não será mais suportado pelo SAT</strong> e não será mais possível acessar o sistema utilizando-o. <a href="../../BrowserSupport.html" target="_blank">Saiba mais</a></p>
+    </div>
+    <div id="divIncompatibleBrowserMessageTurnOffCompatibilityMode" class="incompatible-browser-message-browsers">
+        <p style="margin: 15px;">Saiba como desligar o modo de compatibilidade <a id="lkbIncompatibleBrowserMessageTurnOffCompatibilityMode" href="http://windows.microsoft.com/pt-br/internet-explorer/use-compatibility-view#ie=ie-{0}" target="_blank">aqui</a>.</p>
+    </div>
+    <div id="divIncompatibleBrowserMessageBrowsers" class="incompatible-browser-message-browsers">
+        <p style="margin: 15px;">Recomendamos a utilização dos seguintes navegadores:</p>
+        <table align="center" cellpadding="0" cellspacing="0" class="tabIncompatibleBrowserMessageBrowsers" style="border:none;">
+            <tbody><tr>
+                <td>
+                    <div class="incompatible-browser-message-browser">
+                        <img class="incompatible-browser-message-browser-img" src="../../img/browser-chrome.png"><br>
+                        <strong>Chrome</strong><br>
+                        <span class="incompatible-browser-message-browser-version">Versão mais recente</span><br>
+                        <a href="https://www.google.com/intl/pt-BR/chrome/browser/index.html?hl=pt-BR&amp;brand=" target="_blank">Download</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="incompatible-browser-message-browser">
+                        <img class="incompatible-browser-message-browser-img" src="../../img/browser-ie.png"><br>
+                        <strong>Internet Explorer</strong><br>
+                        <span class="incompatible-browser-message-browser-version">Versão 9 ou superior</span><br>
+                        <a href="http://windows.microsoft.com/pt-br/internet-explorer/download-ie" target="_blank">Atualizar</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody></table>
+    </div>
+    <a href="#" onclick="document.getElementById('divIncompatibleBrowserMessage').style.display = 'none';" style="float:right;">Fechar</a>
+</div>
+
+<script type="text/javascript">BrowserVerifier.Verify();</script>
+
+<script type="text/javascript">
+    var ApplicationMasterHeader =
+    {
+        LoadTheme: function ()
+        {
+            var html = $("html");
+            var cls = "sat-ui-theme";
+            if (!html.hasClass(cls))
+            {
+                html.addClass(cls);
+            }
+        },
+        
+        ResolvedGoUrl: "../../Go.ashx",
+
+        ToggleSearchAppMenu: function (show)
+        {
+            if (Sat.IsUndefined(show))
+            {
+                show = true;
+            }
+
+            var topbarLeft = $(".sat-ui-topbar-left");
+            var searchAppInput = $(".sat-ui-topbar-search-app-input");
+            var rightTopbar = $(".sat-ui-topbar-right");
+            var toggleFn = show ? "hide" : "show";
+
+            topbarLeft[toggleFn]();
+            searchAppInput[String.format("{0}Class", show ? "add" : "remove")]("open");
+            rightTopbar[toggleFn]();
+
+            if (show === true)
+            {
+                $(".sat-ui-topbar-search-app-input input[type=\"hidden\"][name$=\"value\"]").select2("open");
+            }
+        }
+    }
+    ApplicationMasterHeader.LoadTheme();
+</script>
+    <div class="sat-ui-main-content sat-transition">
+        <div class="sat-ui-page-wrapper container">
+            
+
+<div class="sat-ui-page-titlebar">
+    <ul class="nav nav-tabs">
+        <li class="sat-ui-page-title">
+            Sistema de Administração Tributária
+        </li>
+        
+    </ul>
+
+    
+</div>
+            <div class="sat-ui-page-content sat-ui-page-content-responsive">
+                 
+    
+    <div id="Body_Main_Main_sepConsultaNFCe" class="panel panel-default">
+	<div class="panel-heading sat-panel-heading">
+		<div class="panel-title sat-panel-title">
+			<i></i><span class="sat-panel-title-text">Consulta Nota Fiscal de Consumidor Eletrônica (NFCe) </span>
+		</div>
+	</div><div class="sat-panel-content in">
+		<div class="panel-body">
+			
+            <div id="Body_Main_Main_sepConsultaNFCe_uppSepConsultaNFe">
+				
+                    <div class=" row">
+					
+                        <div class="col-md-12">
+						<div id="Body_Main_Main_sepConsultaNFCe_alrInformacoes" class="alert sat-alert alert-info">
+							<div>1. A <b>Chave de Acesso</b> é uma sequência de 44 caracteres alfanuméricos.
+        Ela pode ser encontrada no Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica - <b>DANFE</b>.
+        <br><br>2. Para que a consulta funcione corretamente, é necessário que o <b>seu navegador aceite o uso de 'cookies'</b>.</div>
+						</div>
+					</div>
+                    
+				</div>
+                    <div class=" row">
+					
+                        <div class="col-md-9 form-group  ">
+						<label for="Body_Main_Main_sepConsultaNFCe_txtChave">Chave de Acesso</label><input class="form-control " name="ctl00$ctl00$ctl00$Body$Main$Main$sepConsultaNFCe$txtChave" type="text" maxlength="44" id="Body_Main_Main_sepConsultaNFCe_txtChave">
+					</div>
+                    
+				</div>
+                
+			</div>
+        
+		</div><div class="panel-footer">
+			<div id="Body_Main_Main_sepConsultaNFCe_uppPanelButtons">
+				<a class="btn btn-default " id="Body_Main_Main_sepConsultaNFCe_btnBuscar" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ctl00$ctl00$Body$Main$Main$sepConsultaNFCe$btnBuscar&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))"><i class="glyphicon glyphicon-search sat-icon-with-text"></i><span class="sat-btn-text">Buscar</span></a><a class="btn btn-default " id="Body_Main_Main_sepConsultaNFCe_btnLimpar" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ctl00$ctl00$Body$Main$Main$sepConsultaNFCe$btnLimpar&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))"><i class="glyphicon glyphicon-restart sat-icon-with-text"></i><span class="sat-btn-text">Limpar</span></a>
+			</div>
+		</div>
+	</div><span id="Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave" style="visibility:hidden;display:none;">Chave de Acesso: o valor contém caracteres que não são permitidos, como: &lt; &gt; ! ? # / &amp;</span><span id="Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave" style="display:none;"></span><span id="Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave" style="display:none;"></span>
+</div>
+
+
+
+            </div>
+            
+
+<div class="sat-ui-page-footer">
+	<div class="sat-ui-page-footer-logo-gov"></div>
+	<div class="sat-ui-page-footer-copyrights">
+		<span>Sistema de Administração Tributária – SAT</span>
+		<br>
+		<span>Secretaria de Estado da Fazenda de Santa Catarina – SEF</span>
+		<br>
+		<a class="" id="Body_ApplicationMasterFooter_hlkPolicy" href="../../App_Policy/policy.pdf" target="_blank">Política de Privacidade e Termos de Uso</a>
+	</div>
+</div>
+
+        </div>
+    </div>
+
+        
+    
+
+        <script type="text/javascript">
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function (sender, args)
+            {
+                var error = args.get_error();
+                if (error != undefined)
+                {
+                    var errorMessage = error.rawMessage;
+                    if (errorMessage == undefined)
+                    {
+                        errorMessage = error.message;
+                        if (errorMessage.indexOf(error.name) >= 0)
+                        {
+                            errorMessage = errorMessage.substr(error.name.length + 2);
+                        }
+                    }
+                    Sat.ShowMessage(Sat.MessageType.Error, errorMessage);
+                    args.set_errorHandled(true);
+                }
+            });
+        </script>
+    <a id="postBackEventHandler" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ctl00$ctl00$postBackEventHandler&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))"></a><div id="updatableContainer">
+
+</div><div id="upgMain" style="display:none;" role="status" aria-hidden="true">
+	<div class="sat-up-mask">
+
+	</div><div class="sat-up-content">
+		<img class="sat-up-content-img" src="../../MasterPages/WebResourceHandler.axd?Sat.Framework.Web.UI.WebResources.Images.sat-loading.gif"><div class="sat-up-content-msg">
+			Aguarde. Estamos processando sua solicitação...
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("vasMain"));
+var Page_Validators =  new Array(document.getElementById("Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave"), document.getElementById("Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave"), document.getElementById("Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave = document.all ? document.all["Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave"] : document.getElementById("Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave");
+Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave.controltovalidate = "Body_Main_Main_sepConsultaNFCe_txtChave";
+Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave.errormessage = "Chave de Acesso: o valor contém caracteres que não são permitidos, como: < > ! ? # / &";
+Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave.evaluationfunction = "CustomValidatorEvaluateIsValid";
+Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave.clientvalidationfunction = "Internal.Validation.ValidateDangerousString";
+var Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave = document.all ? document.all["Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave"] : document.getElementById("Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave");
+Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave.controltovalidate = "Body_Main_Main_sepConsultaNFCe_txtChave";
+Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave.errormessage = "Chave de Acesso: preenchimento obrigatório de no mínimo 0 caracteres.";
+Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave.display = "None";
+Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave.enabled = "False";
+Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave.validationexpression = "([\\s\\S]{0,})";
+var Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave = document.all ? document.all["Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave"] : document.getElementById("Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave");
+Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave.controltovalidate = "Body_Main_Main_sepConsultaNFCe_txtChave";
+Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave.errormessage = "Chave de Acesso: preenchimento obrigatório.";
+Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave.display = "None";
+Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave.enabled = "False";
+Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave.initialvalue = "";
+//]]>
+</script>
+
+<script role="startup">Internal.Page.EnableMultipleRequests = true;Internal.Types.Cnpj.EnableAlphanumeric = true;</script><script role="startup">Sat.Helpers.HttpRequestHelper = JSON.parse('{"MaxAllowedContentLength":2147483648,"MaxRequestLength":2147483648}');</script><script role="startup">Sat.UrlBase = '../../';</script>
+<script type="text/javascript">
+//<![CDATA[
+
+(function(id) {
+    var e = document.getElementById(id);
+    if (e) {
+        e.dispose = function() {
+            Array.remove(Page_ValidationSummaries, document.getElementById(id));
+        }
+        e = null;
+    }
+})('vasMain');
+//]]>
+</script>
+<script role="startup">ValidationSummary_Initialize("/tax.NET/WebResource.axd?d=3Ana46qO7iod3ZqHQP_O2mx1GPUyYyurVZN39tRGlNHF-O56S2PZrql0VhLy4E5UErvqx6f9g0-8K6iwt7e10SEs8LbLo54PnhfK1jMgyEYreprce-8qx1WmRvyFSwhEh4YOTdPIc3Xs31VSD5VNHzWw0v6VLHeUW2XqLC9GSvTzJy5pXh1e08W-Lihq4Npp-AeMxXi6ZOGlJuOV0&t=639191218060000000");</script><script role="startup">ApplicationMasterEnvironmentInfo.LogoutUrl = "../../Logout.ashx";</script><script role="startup">ApplicationMasterEnvironmentInfo.Initialize({authExpirationKey:"AUTHEXPIRATION",btnRefreshExpirationID:"Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring_btnRefreshExpiration",btnSessionExpiredOKID:"Body_ApplicationMasterHeader_ApplicationMasterEnvironmentInfo_winExpiring_btnSessionExpiredOK",enableSessionTimer:true,expirationAlertThreshold:300,expirationBlindAlertThreshold:60});</script><script role="startup">Internal.Controls.BasePanel.CssTitleText = "sat-panel-title-text";</script><script role="startup">Internal.Controls.BasePanel.CssTitleText = "sat-panel-title-text";</script>
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        Internal.Controls.UpdateProgress.ID = "upgMain";
+document.getElementById('Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('Body_Main_Main_sepConsultaNFCe_val_dangerous_string_Body_Main_Main_sepConsultaNFCe_txtChave'));
+}
+
+document.getElementById('Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('Body_Main_Main_sepConsultaNFCe_mlv_Body_Main_Main_sepConsultaNFCe_txtChave'));
+}
+
+document.getElementById('Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('Body_Main_Main_sepConsultaNFCe_rfv_Body_Main_Main_sepConsultaNFCe_txtChave'));
+}
+Sys.Application.add_init(function() {
+    $create(Sys.UI._UpdateProgress, {"associatedUpdatePanelId":null,"displayAfter":500,"dynamicLayout":true}, null, null, $get("upgMain"));
+});
+//]]>
+</script>
+</form>
+
+
+</body>
