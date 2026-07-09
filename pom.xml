@@ -12,10 +12,10 @@
     </parent>
     
     <groupId>br.com.poupacompra</groupId>
-    <artifactId>poupa-compra-scraping</artifactId>
+    <artifactId>poupa-compra-scrapping</artifactId>
     <version>1.0.0</version>
-    <name>poupa-compra-scraping</name>
-    <description>Serviço de Scraping de NFCe</description>
+    <name>poupa-compra-scrapping</name>
+    <description>Serviço de Scrapping de NFCe</description>
     
     <properties>
         <java.version>21</java.version>
