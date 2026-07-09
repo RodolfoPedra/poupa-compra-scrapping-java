@@ -10,10 +10,14 @@ services:
     ports:
       - "5005:5005"
       - "8181:8181"
+      - "5900:5900"
+      - "6080:6080"
     environment:
       - SPRING_PROFILES_ACTIVE=local
       - SCRAPING_BROWSER_POOL_SIZE=3
-      - SCRAPING_BROWSER_HEADLESS=true
+      - SCRAPING_BROWSER_HEADLESS=false
+      - SCRAPING_DEBUG_UI=true
+      - SCRAPING_BROWSER_DEBUG_UI_ENABLED=true
       - SCRAPING_CACHE_TTL_HOURS=24
     restart: unless-stopped
     deploy:
