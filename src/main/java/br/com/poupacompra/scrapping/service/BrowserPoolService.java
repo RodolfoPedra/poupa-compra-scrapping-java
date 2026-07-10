@@ -2,11 +2,13 @@ package br.com.poupacompra.scrapping.service;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -180,25 +182,27 @@ public class BrowserPoolService {
     
     static Path resolveExecutablePath(String configuredExecutablePath, String playwrightBrowsersPath, boolean headless) {
         if (StringUtils.hasText(configuredExecutablePath)) {
-            return Path.of(configuredExecutablePath);
-        }
+            Path configuredPath = Path.of(configuredExecutablePath);
+            if (Files.isExecutable(configuredPath)) {
+                return configuredPath;
+            }
 
-        if (!StringUtils.hasText(playwrightBrowsersPath)) {
-            return null;
-        }
-
-        List<Path> candidatePaths = headless
-            ? List.of(
-                Path.of(playwrightBrowsersPath, "chromium-1208", "chrome-linux64", "chrome"),
-                Path.of(playwrightBrowsersPath, "chromium_headless_shell-1208", "chrome-headless-shell-linux64", "chrome-headless-shell"),
-                Path.of("/usr/bin/chromium"),
-                Path.of("/usr/bin/chromium-browser")
-            )
-            : List.of(
-                Path.of(playwrightBrowsersPath, "chromium-1208", "chrome-linux64", "chrome"),
-                Path.of("/usr/bin/chromium"),
-                Path.of("/usr/bin/chromium-browser")
+            log.warn(
+                "Executable configurado não encontrado ou sem permissão de execução: {}. Tentando fallback automático.",
+                configuredPath
             );
+        }
+
+        List<Path> candidatePaths = new ArrayList<>();
+
+        if (StringUtils.hasText(playwrightBrowsersPath)) {
+            candidatePaths.addAll(resolvePlaywrightCandidates(playwrightBrowsersPath, headless));
+        }
+
+        candidatePaths.add(Path.of("/usr/bin/chromium"));
+        candidatePaths.add(Path.of("/usr/bin/chromium-browser"));
+        candidatePaths.add(Path.of("/usr/bin/google-chrome"));
+        candidatePaths.add(Path.of("/usr/bin/google-chrome-stable"));
 
         for (Path candidate : candidatePaths) {
             if (Files.isExecutable(candidate)) {
@@ -206,7 +210,41 @@ public class BrowserPoolService {
             }
         }
 
+        log.info("Nenhum executável de Chromium encontrado manualmente. Usando resolução padrão do Playwright.");
         return null;
+    }
+
+    private static List<Path> resolvePlaywrightCandidates(String playwrightBrowsersPath, boolean headless) {
+        Path browsersHome = Path.of(playwrightBrowsersPath);
+        if (!Files.isDirectory(browsersHome)) {
+            return List.of();
+        }
+
+        List<String> relativeExecutables = headless
+            ? List.of(
+                "chrome-headless-shell-linux64/chrome-headless-shell",
+                "chrome-linux64/chrome",
+                "chrome-linux/chrome"
+            )
+            : List.of(
+                "chrome-linux64/chrome",
+                "chrome-linux/chrome"
+            );
+
+        try (Stream<Path> directories = Files.list(browsersHome)) {
+            return directories
+                .filter(Files::isDirectory)
+                .filter(dir -> {
+                    String name = dir.getFileName().toString();
+                    return name.startsWith("chromium-") || name.startsWith("chromium_headless_shell-");
+                })
+                .sorted((left, right) -> right.getFileName().toString().compareTo(left.getFileName().toString()))
+                .flatMap(dir -> relativeExecutables.stream().map(dir::resolve))
+                .toList();
+        } catch (Exception e) {
+            log.warn("Falha ao listar executáveis em PLAYWRIGHT_BROWSERS_PATH={}: {}", playwrightBrowsersPath, e.getMessage());
+            return List.of();
+        }
     }
 
     /**

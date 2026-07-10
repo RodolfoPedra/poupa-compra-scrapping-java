@@ -10,8 +10,15 @@ RUN mvn clean package -DskipTests -B
 
 FROM mcr.microsoft.com/playwright/java:v1.58.0-jammy
 
+WORKDIR /app
 ARG DEBIAN_FRONTEND=noninteractive
+
 ENV TZ=America/Sao_Paulo
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+ENV SCRAPING_BROWSER_POOL_SIZE=3
+ENV SCRAPING_BROWSER_HEADLESS=false
+ENV SCRAPING_DEBUG_UI=true
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -24,17 +31,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
 COPY --from=builder /app/target/ .
     
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
-
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-ENV SCRAPING_BROWSER_POOL_SIZE=3
-ENV SCRAPING_BROWSER_HEADLESS=false
-ENV SCRAPING_DEBUG_UI=true
-
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
